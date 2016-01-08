@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public interface IView {
 
     public enum InputValue {
-        Roll, Score, Load, Skip, Quit, New, Nothing
+        ROLL, SCORE, LOAD, SKIP, QUIT, NEW, NOTHING
     }
 
     void WelcomeMessage(); //Startup Window

@@ -44,7 +44,7 @@ public class Console implements IView {
     }
 
     public int GetComputerPlayersNumber(int humanPlayers){
-        System.out.println("How meny bots do you want to have in your game? " + (5 - humanPlayers));
+        System.out.println("How many bots do you want to have in your game? " + (5 - humanPlayers));
         return scan.nextInt();
     }
 
@@ -106,27 +106,27 @@ public class Console implements IView {
 
         if (input.equals("r"))
         {
-            return InputValue.Roll;
+            return InputValue.ROLL;
         }
         else if (input.equals("s"))
         {
-            return InputValue.Score;
+            return InputValue.SCORE;
         }
         else if (input.equals("l")){
-            return InputValue.Load;
+            return InputValue.LOAD;
         }
         else if(input.equals("z")){
-            return InputValue.Skip;
+            return InputValue.SKIP;
         }
         else if (input.equals("q"))
         {
-            return InputValue.Quit;
+            return InputValue.QUIT;
         }
         else if (input.equals("n"))
         {
-            return InputValue.New;
+            return InputValue.NEW;
         }
-        return InputValue.Nothing;
+        return InputValue.NOTHING;
     }
 
 

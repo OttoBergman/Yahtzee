@@ -45,10 +45,10 @@ public class GameController {
             String input = view.GetInput();
             IView.InputValue inputValue = view.CheckInput(input);
 
-            if(inputValue == IView.InputValue.Load){
+            if(inputValue == IView.InputValue.LOAD){
                 this.game = game.getSaveGame().loadGame(new Game());
             }
-            else if (inputValue == IView.InputValue.New) {
+            else if (inputValue == IView.InputValue.NEW) {
                 int players = 0;
 
                 while (!game.PlayersNumberIsValid(players))
@@ -80,7 +80,7 @@ public class GameController {
             String input = view.GetInput();
             IView.InputValue inputValue = view.CheckInput(input);
 
-            if (inputValue == IView.InputValue.Roll) {
+            if (inputValue == IView.InputValue.ROLL) {
                 rolledDice = ((game.rollDice(player)));
                 view.DisplayDiceRoll(rolledDice);
 
@@ -89,9 +89,9 @@ public class GameController {
                     heldDices.addAll(game.holdDice(player, diceToHold, rolledDice));
                     view.ShowHeldDice(heldDices);
                 }
-            } else if (inputValue == IView.InputValue.Skip) {
+            } else if (inputValue == IView.InputValue.SKIP) {
                 break;
-            } else if (inputValue == IView.InputValue.Score) {
+            } else if (inputValue == IView.InputValue.SCORE) {
                 view.ShowHeldDice(heldDices);
                 view.DisplayScoreSheet(player);
 
@@ -106,13 +106,13 @@ public class GameController {
                 heldDices.clear();
                 player.resetTurnScore();
                 playRound(game.StartRound());
-            } else if (inputValue == IView.InputValue.Quit) {
+            } else if (inputValue == IView.InputValue.QUIT) {
                 if (view.DisplaySave()) {
                     game.getSaveGame().saveGame(game);
                 }
                 view.DisplayBye();
                 System.exit(0);
-            } else if (inputValue == IView.InputValue.Nothing || inputValue != IView.InputValue.Quit) {
+            } else if (inputValue == IView.InputValue.NOTHING || inputValue != IView.InputValue.QUIT) {
                 playRound(player);
             }
         }

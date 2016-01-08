@@ -5,7 +5,7 @@ package model;
  */
 public class Bot extends Player {
 
-    /* Because the lack of time and how complicated it would be to create a good bot
+    /* Because the lack of time and how complicated it would be to create a good AI
         we will create one if we have time for it.
     */
     public Bot(){
