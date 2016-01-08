@@ -34,8 +34,8 @@ public class Console implements IView {
     }
 
     public void WelcomeMessage() {
-        System.out.println("WELCOME TO DA YAHTZY CLUB");
-        System.out.println("Would you like to start a new game or load one? (n for new game, l for load game).");
+        System.out.println("Welcome to Yhatzee with american rules ");
+        System.out.println("Press n for new game, l for load game.");
     }
 
     public int GetHumanPlayersNumber(){
@@ -44,19 +44,16 @@ public class Console implements IView {
     }
 
     public int GetComputerPlayersNumber(int humanPlayers){
-        System.out.println("Cool. Now, how many computer players would you like to play? You can add " + (5 - humanPlayers));
+        System.out.println("How meny bots do you want to have in your game? " + (5 - humanPlayers));
         return scan.nextInt();
     }
 
-    /*
-    Takes from the users the name of each player (according to the number of players they have chosen).
-     */
     public String[] PlayersInfo(int playerNumber){
 
         String[] names = new String[playerNumber];
 
         for(int i = 1; i <= playerNumber; i++) {
-            System.out.println("What is Player " + i + "'s " + "name?");
+            System.out.println("What name should Player " + i + "'s " + "name bee?");
             try {
                 names[i - 1] = input.readLine();
             } catch (IOException e) {
@@ -78,7 +75,7 @@ public class Console implements IView {
 
 
     public void DisplayScoreSheet( Player player) {
-        System.out.println("Which catagory do you wish to place your score?");
+        System.out.println("Which category do you wish to place your score in?");
         int i = 0;
         for (ScoreSheet.value v : ScoreSheet.value.values()) {
 
@@ -150,8 +147,6 @@ public class Console implements IView {
 
         }
         return diceToHold;
-        // returns an array of the slots of which dice need to be frozen
-        //need to freeze the slots in the roll due to the choice
     }
 
 
@@ -160,9 +155,6 @@ public class Console implements IView {
 
     }
 
-    /*
-    Asks the user whether s/he wants to save the game before exiting.
-     */
     public boolean DisplaySave() {
         System.out.println("Would you like to save the game before leaving? (Y) for Yes, any other key for (no).");
         String answer = " ";
@@ -202,7 +194,7 @@ public class Console implements IView {
     }
 
     public void DisplayBye(){
-        System.out.println("Good bye!");
+        System.out.println("bye bye!");
     }
 
     public void PrintScoreSheet(Player player) {

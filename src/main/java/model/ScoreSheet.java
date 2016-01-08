@@ -225,7 +225,6 @@ public class ScoreSheet implements Serializable {
                 }
                 break;
 
-            //There is no difference between the straights yet
             case 10:
                 if(isSmallStraight(dices)) {
                     int sStraight = 30;

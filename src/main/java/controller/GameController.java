@@ -12,7 +12,7 @@ import java.util.HashSet;
 
 
 /**
- * Created by Hatem & oerlex on 2015-11-12.
+ * Created by otto on 2015-11-18.
  */
 public class GameController {
 
@@ -67,7 +67,7 @@ public class GameController {
 
         Player player = game.StartRound();
         if (player.isBot()){
-            //TODO: Computer plays
+
         }
         else{ playRound(player); }
         return !isGameOver;

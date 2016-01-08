@@ -29,11 +29,11 @@ public class SaveGame implements Serializable {
             try
             {
                 File file = new File("savedGame.save");
-                FileInputStream fileIn = new FileInputStream(file);
-                ObjectInputStream in = new ObjectInputStream(fileIn);
+                FileInputStream loadFile = new FileInputStream(file);
+                ObjectInputStream in = new ObjectInputStream(loadFile);
                 g = (Game) in.readObject();
                 in.close();
-                fileIn.close();
+                loadFile.close();
                 return g;
             }catch(IOException i)
             {
@@ -41,7 +41,7 @@ public class SaveGame implements Serializable {
                 return null;
             }catch(ClassNotFoundException c)
             {
-                System.out.println("Could not read file.");
+                System.out.println("File is unreadable.");
                 c.printStackTrace();
                 return null;
             }
