@@ -46,7 +46,8 @@ public class GameController {
             IView.InputValue inputValue = view.CheckInput(input);
 
             if(inputValue == IView.InputValue.LOAD){
-                this.game = game.getSaveGame().loadGame(new Game());
+                String gameName = view.askForSaveName();
+                this.game = game.getSaveGame().loadGame(new Game(), gameName);
             }
             else if (inputValue == IView.InputValue.NEW) {
                 int players = 0;
@@ -93,22 +94,27 @@ public class GameController {
                 break;
             } else if (inputValue == IView.InputValue.SCORE) {
                 view.ShowHeldDice(heldDices);
-                view.DisplayScoreSheet(player);
+                view.DisplayScoreSheet(player, game.getGameMode(), game.getCurrentRound());
 
-                int choice = Integer.valueOf(view.GetInput());
+
                 HashSet<Dice> allDices = new HashSet<Dice>();
                 allDices.addAll(rolledDice);
                 allDices.addAll(heldDices);
                 ArrayList<Dice> all = new ArrayList<Dice>();
                 all.addAll(allDices);
-                player.getScoreSheet().scorePoints(choice, all);
+                int choice = 0;
+                do {
+                    choice = Integer.valueOf(view.GetInput());
+                }
+                while (player.getScoreSheet().scorePoints(choice, all));
                 view.PrintScoreSheet(player);
                 heldDices.clear();
                 player.resetTurnScore();
                 playRound(game.StartRound());
             } else if (inputValue == IView.InputValue.QUIT) {
                 if (view.DisplaySave()) {
-                    game.getSaveGame().saveGame(game);
+                    String name = view.askForSaveName();
+                    game.getSaveGame().saveGame(game, name);
                 }
                 view.DisplayBye();
                 System.exit(0);

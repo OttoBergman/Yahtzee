@@ -7,15 +7,15 @@ import java.io.*;
  */
 public class SaveGame implements Serializable {
 
-        public boolean saveGame(Object object){
+        public boolean saveGame(Object object, String name){
             try{
                 FileOutputStream fileOut =
-                        new FileOutputStream("savedGame.save");
+                        new FileOutputStream(name + ".save");
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(object);
                 out.close();
                 fileOut.close();
-                System.out.printf("Serialized data saved to savedGame.save");
+                System.out.printf("Game data saved to" + name + ".save");
 
             }catch(IOException i)
             {
@@ -25,17 +25,22 @@ public class SaveGame implements Serializable {
         }
 
 
-        public Game loadGame(Game g){
+        public Game loadGame(Game g, String name){
             try
             {
-                File file = new File("savedGame.save");
+                File file = new File(name);
                 FileInputStream loadFile = new FileInputStream(file);
                 ObjectInputStream in = new ObjectInputStream(loadFile);
                 g = (Game) in.readObject();
                 in.close();
                 loadFile.close();
                 return g;
-            }catch(IOException i)
+            } catch (FileNotFoundException d) {
+                System.out.println("File with that namce could not be found.");
+                d.printStackTrace();
+                return null;
+
+            } catch(IOException i)
             {
                 i.printStackTrace();
                 return null;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Game extends SaveGame implements Serializable{
 
-    private static final long serialVersionUID = 941184028477757630L;
+    private static final long serialVersionUID = 1L;
     private IGameMode gameMode;
     private int playerTurn = 0;
     private int currentRound;

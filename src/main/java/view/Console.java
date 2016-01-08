@@ -21,7 +21,7 @@ public class Console implements IView {
 
     private ArrayList<String> scoreOptions = new ArrayList<String>(Arrays.asList("Ones (1)", "Twos (2)", "Threes (3)",
             "Fours (4)", "Fives (5)", "Sixes (6)", "Three of a kind (7)", "Four of a kind (8)", "Full house (9)",
-            "Small straight (10)", "Large straight (11)", "Yachtzee (12)", "Chance (13)"));
+            "Small straight (10)", "Large straight (11)", "Yachtzee (12)", "Chance (13)", "Skip/No points (14)"));
 
     Scanner scan;
     BufferedReader input;
@@ -70,24 +70,50 @@ public class Console implements IView {
             System.out.println("That was your last roll. " + player.getName() + "Type 's' to Score or 'q' to Quit/Save");
         }
         else
-            System.out.println( player.getName() + ": Type 'r' to roll, 's' to Score, 'z' to Skip your turn or 'q' to Quit/Save");
+            System.out.println( player.getName() + ": Type 'z' to Skip your turn, 's' to Score, 'r' to roll or 'q' to Quit/Save");
     }
 
 
-    public void DisplayScoreSheet( Player player) {
+    public void DisplayScoreSheet( Player player, IGameMode gameMode, int currentRound) {
         System.out.println("Which category do you wish to place your score in?");
-        int i = 0;
-        for (ScoreSheet.value v : ScoreSheet.value.values()) {
+        String mode = gameMode.getGameMode();
 
-            if (v == ScoreSheet.value.BONUS || v == ScoreSheet.value.SUM || v == ScoreSheet.value.TOTAL_SCORE) {
-                continue;
+        if (mode.equals("NormalRules")) {
+            int i = 0;
+            for (ScoreSheet.value v : ScoreSheet.value.values()) {
+
+                if (v == ScoreSheet.value.BONUS || v == ScoreSheet.value.SUM || v == ScoreSheet.value.TOTAL_SCORE
+                        || i == 13) {
+                    continue;
+                }
+                int value = player.getScoreSheet().getScoreValue(v);
+                if (value == 0) {
+                    System.out.println(scoreOptions.get(i));
+                }
+                i++;
             }
-            int value = player.getScoreSheet().getScoreValue(v);
-            if (value == 0) {
-                System.out.println(scoreOptions.get(i));
-            }
-            i++;
         }
+        else if (mode.equals("TopDownRules")) {
+            int value = currentRound - 2;
+            if (value < 0) {
+                value = 0;
+            }
+            System.out.println(scoreOptions.get(value));
+            System.out.println(scoreOptions.get(13));
+        }
+    }
+
+    public String askForSaveName() {
+        System.out.println("Input the name of the save file you with to save/load.");
+        String name = "";
+        try {
+            name = input.readLine();
+            name = name.replaceAll(" ", "");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return name;
     }
 
 
@@ -182,7 +208,12 @@ public class Console implements IView {
     }
 
     public void ShowHeldDice(ArrayList<Dice> dice){
-        System.out.println("Your held dice " + toString(dice));
+        if (!dice.isEmpty()) {
+            System.out.println("Your held dice " + toString(dice));
+        }
+        else {
+            System.out.println("You are not holding any dice.");
+        }
     }
 
     private String toString(ArrayList<Dice> array) {

@@ -146,118 +146,173 @@ public class ScoreSheet implements Serializable {
         return (getScoreValue(value.SUM) >= 63);
     }
 
-    public void scorePoints(int a, ArrayList<Dice> dices){
+    public boolean scorePoints(int a, ArrayList<Dice> dices){
+        boolean used = true;
         switch(a) {
             case 1:
-                for (Dice i : dices) {
-                    if (i.getDiceValue() == 1) {
-                        this.setScoreValue(value.ONES, getScoreValue(value.ONES) + 1);
-                        this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 1);
+                if (this.getScoreValue(value.ONES) == 0) {
+                    for (Dice i : dices) {
+                        if (i.getDiceValue() == 1) {
+
+                            this.setScoreValue(value.ONES, getScoreValue(value.ONES) + 1);
+                            this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 1);
+                            used = false;
+                        }
                     }
                 }
                 break;
 
-            case 2: for(Dice i:dices){
-                if(i.getDiceValue()==2) {
-                    this.setScoreValue(value.TWOS, getScoreValue(value.TWOS) + 2);
-                    this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 2);
+            case 2:
+                if (this.getScoreValue(value.TWOS) == 0) {
+                    for(Dice i:dices){
+                        if(i.getDiceValue()==2) {
+
+                            this.setScoreValue(value.TWOS, getScoreValue(value.TWOS) + 2);
+                            this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 2);
+                            used = false;
+                        }
+                    }
                 }
-            }
                 break;
 
-            case 3: for(Dice i:dices){
-                if(i.getDiceValue()==3) {
-                    this.setScoreValue(value.THREES, getScoreValue(value.THREES) + 3);
-                    this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 3);
+            case 3:
+                if (this.getScoreValue(value.THREES) == 0) {
+                    for(Dice i:dices){
+                        if(i.getDiceValue()==3) {
+
+                            this.setScoreValue(value.THREES, getScoreValue(value.THREES) + 3);
+                            this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 3);
+                            used = false;
+                        }
+                    }
                 }
-            }
                 break;
 
-            case 4: for(Dice i:dices){
-                if(i.getDiceValue()==4) {
-                    this.setScoreValue(value.FOURS, getScoreValue(value.FOURS) + 4);
-                    this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 4);
-                }
+            case 4:
+                if (this.getScoreValue(value.FOURS) == 0) {
+                    for(Dice i:dices){
+                        if(i.getDiceValue()==4) {
+                            this.setScoreValue(value.FOURS, getScoreValue(value.FOURS) + 4);
+                            this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 4);
+                            used = false;
+                        }
+                    }
 
-            }
+                }
                 break;
 
-            case 5: for(Dice i:dices){
-                if(i.getDiceValue()==5) {
-                    this.setScoreValue(value.FIVES, getScoreValue(value.FIVES) + 5);
-                    this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 5);
+            case 5:
+                if (this.getScoreValue(value.FIVES) == 0) {
+                    for(Dice i:dices){
+                        if(i.getDiceValue()==5) {
+                            this.setScoreValue(value.FIVES, getScoreValue(value.FIVES) + 5);
+                            this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 5);
+                            used = false;
+                        }
+                    }
                 }
-            }
                 break;
 
-            case 6: for(Dice i:dices){
-                if(i.getDiceValue()==6) {
-                    this.setScoreValue(value.SIXES, getScoreValue(value.SIXES) + 6);
-                    this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 6);
+            case 6:
+                if (this.getScoreValue(value.SIXES) == 0) {
+                    for(Dice i:dices){
+                        if(i.getDiceValue()==6) {
+                            this.setScoreValue(value.SIXES, getScoreValue(value.SIXES) + 6);
+                            this.setScoreValue(value.SUM, getScoreValue(value.SUM) + 6);
+                            used = false;
+                        }
+                    }
                 }
-            }
                 break;
             //Three of a kind
             case 7:
                 if(isThreeOfAKind(dices)) {
-                    int diceValue = 0;
-                    for (Dice d : dices) {
-                        diceValue += d.getDiceValue();
+                    if (this.getScoreValue(value.THREE_OF_A_KIND) == 0) {
+                        int diceValue = 0;
+                        for (Dice d : dices) {
+                            diceValue += d.getDiceValue();
+                        }
+                        this.setScoreValue(value.THREE_OF_A_KIND, getScoreValue(value.THREE_OF_A_KIND) + diceValue);
+                        used = false;
                     }
-                    this.setScoreValue(value.THREE_OF_A_KIND, getScoreValue(value.THREE_OF_A_KIND) + diceValue);
                 }
                 break;
             //four of a kind
             case 8:
                 if(isFourOfAKind(dices)) {
-                    int diceValue = 0;
-                    for (Dice d : dices) {
-                        diceValue += d.getDiceValue();
+                    if (this.getScoreValue(value.FOUR_OF_A_KIND) == 0) {
+                        int diceValue = 0;
+                        for (Dice d : dices) {
+                            diceValue += d.getDiceValue();
+                        }
+                        this.setScoreValue(value.FOUR_OF_A_KIND, getScoreValue(value.FOUR_OF_A_KIND) + diceValue);
+                        used = false;
                     }
-                    this.setScoreValue(value.FOUR_OF_A_KIND, getScoreValue(value.FOUR_OF_A_KIND) + diceValue);
                 }
                 break;
 
             case 9:
-                if(isFullHouse(dices)){
-                    int fullHouse = 25;
-                    this.setScoreValue(value.FULL_HOUSE, getScoreValue(value.FULL_HOUSE) + fullHouse);
+                if(isFullHouse(dices)) {
+                    if (this.getScoreValue(value.FULL_HOUSE) == 0) {
+                        int fullHouse = 25;
+                        this.setScoreValue(value.FULL_HOUSE, getScoreValue(value.FULL_HOUSE) + fullHouse);
+                        used = false;
+                    }
+
                 }
                 break;
 
             case 10:
                 if(isSmallStraight(dices)) {
-                    int sStraight = 30;
-                    this.setScoreValue(value.SMALL_STRAIGHT, getScoreValue(value.SMALL_STRAIGHT) + sStraight);
+                    if (this.getScoreValue(value.SMALL_STRAIGHT) == 0) {
+                        int sStraight = 30;
+                        this.setScoreValue(value.SMALL_STRAIGHT, getScoreValue(value.SMALL_STRAIGHT) + sStraight);
+                        used = false;
+                    }
                 }
                 break;
 
             case 11:
                 if(isLargeStraight(dices)) {
-                    int lStraight = 40;
-                    this.setScoreValue(value.LARGE_STRAIGHT, getScoreValue(value.LARGE_STRAIGHT) + lStraight);
+                    if (this.getScoreValue(value.LARGE_STRAIGHT) == 0) {
+                        int lStraight = 40;
+                        this.setScoreValue(value.LARGE_STRAIGHT, getScoreValue(value.LARGE_STRAIGHT) + lStraight);
+                        used = false;
+                    }
                 }
                 break;
 
             case 12:
                 if(isYahtzee(dices)) {
-                    int yahtzee = 50;
-                    this.setScoreValue(value.YAHTZEE, getScoreValue(value.YAHTZEE) + yahtzee);
+                    if (this.getScoreValue(value.YAHTZEE) == 0) {
+                        int yahtzee = 50;
+                        this.setScoreValue(value.YAHTZEE, getScoreValue(value.YAHTZEE) + yahtzee);
+                        used = false;
+                    }
                 }
                 break;
 
             case 13:
-                int chance = 0;
-                for(Dice d:dices) {
-                    chance += d.getDiceValue();
+                if (this.getScoreValue(value.CHANCE) == 0) {
+                    int chance = 0;
+                    for (Dice d : dices) {
+                        chance += d.getDiceValue();
+                    }
+                    this.setScoreValue(value.CHANCE, getScoreValue(value.CHANCE) + chance);
+                    used = false;
                 }
-                this.setScoreValue(value.CHANCE, getScoreValue(value.CHANCE) + chance);
+                break;
+
+            case 14:
+                used = false;
                 break;
         }
 
         if (isBonusValid() && getScoreValue(value.BONUS) == 0) {
             this.setScoreValue(value.BONUS, getScoreValue(value.BONUS) + 35);
         }
+
+        return used;
     }
 
     public void scoreTotalPoints() {
